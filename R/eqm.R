@@ -13,7 +13,7 @@
 #' @export
 #'
 
-eqm <- function(b, x_i, n, c, k){
-  p_default <- post_mean_cdf(b-c, x_i, n, k)
-  p_default*c + (1-p_default)*b - (1-p_default) * post_mean_exp(x_i, n, k, lb=b-c)
+eqm <- function(b, mu_0, sigma_0, x_i, n, c, k){
+  p_default <- post_mean_cdf(b-c, mu_0, sigma_0, x_i, n, k)
+  p_default*c + (1-p_default)*b - (1-p_default) * post_mean_exp(x_i, mu_0, sigma_0, n, k, lb=b-c)
 }

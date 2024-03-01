@@ -24,6 +24,8 @@ bid <- function(x_i,n,c,k,mu_0,sigma_0){
       n = n,
       c = c,
       k = k,
+      sigma_0 = sigma_0,
+      mu_0 = mu_0,
       lower = mu_0-10*sigma_0,
       upper = mu_0+10*sigma_0,
       tol=.0001,
