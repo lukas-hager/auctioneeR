@@ -11,7 +11,7 @@
 #'
 #' @return The sample mean required to generate this value of the posterior, given a bidder's signal.
 #' @export
-#'
+
 h_inv <- function(mu_1,mu_0,x_i,n,k){
   f <- (1*(n==2) + 2*(n>2))
 

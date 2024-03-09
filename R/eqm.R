@@ -4,6 +4,8 @@
 #'
 #'
 #' @param b The proposed bid.
+#' @param mu_0 The prior mean.
+#' @param sigma_0 The prior SD.
 #' @param x_i The bidder's signal.
 #' @param n The number of bidders.
 #' @param c The cost of default.

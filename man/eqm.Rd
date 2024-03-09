@@ -4,10 +4,14 @@
 \alias{eqm}
 \title{Equilibrium Function}
 \usage{
-eqm(b, x_i, n, c, k)
+eqm(b, mu_0, sigma_0, x_i, n, c, k)
 }
 \arguments{
 \item{b}{The proposed bid.}
+
+\item{mu_0}{The prior mean.}
+
+\item{sigma_0}{The prior SD.}
 
 \item{x_i}{The bidder's signal.}
 
