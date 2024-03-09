@@ -3,7 +3,7 @@
 #' @param x The observed data.
 #' @param mu_0 The prior mean.
 #' @param sigma_0 The prior standard deviation.
-#' @param k The coefficient on the signal standard variance.
+#' @param k The coefficient on the signal standard deviation
 #'
 #' @return A `stats::dnorm` object with the appropriate hyperparameters.
 #' @export

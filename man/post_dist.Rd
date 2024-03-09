@@ -13,7 +13,7 @@ post_dist(x, mu_0, sigma_0, k)
 
 \item{sigma_0}{The prior standard deviation.}
 
-\item{k}{The coefficient on the signal standard variance.}
+\item{k}{The coefficient on the signal standard deviation}
 }
 \value{
 A \code{stats::dnorm} object with the appropriate hyperparameters.
