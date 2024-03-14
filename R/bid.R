@@ -16,7 +16,7 @@
 
 bid <- function(x_i,n,c,k,mu_0,sigma_0){
   if (n==2){
-    (k*mu_0 + 2*x_i)/(n+k)
+    (k*mu_0 + n*x_i)/(n+k)
   } else {
     stats::uniroot(
       eqm,

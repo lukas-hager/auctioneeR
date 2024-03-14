@@ -13,13 +13,15 @@
 #'
 
 post_mean_cdf <- function(mu_1, mu_0, sigma_0, x_i, n, k){
-  f = calc_f(n)
-  s = sqrt(sigma_0^2*(1+k/(n-f)))
+  # the posterior distribution of the sample mean after having seen one's signal
+  s = sqrt(sigma_0^2*((n-1)*k + k*(k-1))/((n-1)*(k+1)))
+  m = (k * mu_0 + x_i)/(k+1)
 
+  # putting the desired value of the posterior mean in terms of sample mean
   transformed = h_inv(mu_1, mu_0, x_i, n, k)
 
-  xi = (transformed-mu_0)/s
-  beta = (x_i-mu_0)/s
+  xi = (transformed-m)/s
+  beta = (x_i-m)/s
 
   if (stats::pnorm(beta)>0){
     return(stats::pnorm(xi)*(transformed<=x_i)/stats::pnorm(beta) + (transformed>x_i))

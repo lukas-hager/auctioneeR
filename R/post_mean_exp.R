@@ -13,15 +13,16 @@
 #'
 
 post_mean_exp <- function(x_i, mu_0, sigma_0, n, k, lb=-Inf){
-  f = calc_f(n)
-  s = sqrt(sigma_0^2*(1+k/(n-f)))
+  # the posterior distribution of the sample mean after having seen one's signal
+  s = sqrt(sigma_0^2*((n-1)*k + k*(k-1))/((n-1)*(k+1)))
+  m = (k * mu_0 + x_i)/(k+1)
 
-  beta = (x_i-mu_0)/s
-  alpha = (h_inv(lb, mu_0, x_i, n, k)-mu_0)/s
+  beta = (x_i-m)/s
+  alpha = (h_inv(lb, m, x_i, n, k)-m)/s
 
   ifelse(
     ((stats::pnorm(beta)-stats::pnorm(alpha))>0) & (!is.na(stats::pnorm(beta)-stats::pnorm(alpha))),
-    (k*mu_0+f*x_i)/(n+k) + ((n-f)/(n+k)) * (mu_0 + (stats::dnorm(alpha)-stats::dnorm(beta))*s/(stats::pnorm(beta)-stats::pnorm(alpha))),
+    (k*m+x_i)/(n+k) + ((n-1)/(n+k)) * (m + (stats::dnorm(alpha)-stats::dnorm(beta))*s/(stats::pnorm(beta)-stats::pnorm(alpha))),
     -1e6
   )
 }
