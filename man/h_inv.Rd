@@ -22,5 +22,5 @@ The sample mean required to generate this value of the posterior, given a bidder
 }
 \description{
 Given the posterior mean is updated via \deqn{\mu_1 = h(\overline{x}) = \frac{k\mu_0 + n\overline{x}}{n+k}}
-We have that \deqn{\overline{x}_{n-2} = h^{-1}(\mu_1) = \frac{(n+k)\mu_1 - (n-2)\overline{x}_{n-2} - 2*x_i}{n-2}}
+We have that \deqn{\overline{x}_{n-1} = h^{-1}(\mu_1) = \frac{(n+k)\mu_1 - k\mu_0 - x_i}{n-1}}
 }

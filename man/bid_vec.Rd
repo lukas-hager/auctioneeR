@@ -4,7 +4,19 @@
 \alias{bid_vec}
 \title{Generate The Optimal Probability-Weighted Bids}
 \usage{
-bid_vec(mu_t, sigma_t, x_seq, c_seq, c_norm, lambda_t, n_max, k, mat)
+bid_vec(
+  mu_t,
+  sigma_t,
+  x_seq,
+  c_seq,
+  c,
+  lambda_t,
+  n_max,
+  k,
+  mat,
+  mu_base = 0,
+  sigma_base = 1
+)
 }
 \arguments{
 \item{mu_t}{The auction's value of the mean of the common value distribution.}
@@ -15,7 +27,7 @@ bid_vec(mu_t, sigma_t, x_seq, c_seq, c_norm, lambda_t, n_max, k, mat)
 
 \item{c_seq}{The grid of default costs.}
 
-\item{c_norm}{The auction's cost of default, normalized.}
+\item{c}{The auction's nominal cost of default}
 
 \item{lambda_t}{The auction's value of the poisson parameter.}
 
@@ -24,6 +36,10 @@ bid_vec(mu_t, sigma_t, x_seq, c_seq, c_norm, lambda_t, n_max, k, mat)
 \item{k}{The coefficient on the signal standard deviation}
 
 \item{mat}{The interpolation matrices.}
+
+\item{mu_base}{The mean of the base case auction.}
+
+\item{sigma_base}{The SD of the base case auction.}
 }
 \value{
 Returns a vector of normalized bids for the auction's normalized cost of default.
