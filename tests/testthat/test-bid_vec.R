@@ -121,3 +121,31 @@ test_that("bid linearity trick works, with default, big spec", {
 
   expect_equal(bids_mat, bids_flat, tolerance = .001)
 })
+
+test_that("compare to bajari", {
+  my_k <- .3
+  my_mu <- 1
+  my_sigma <- .6
+  my_c <- 200
+  my_lambda <- .05
+
+  my_mats <- bid_mats(seq(-3,3,length.out=50), seq(99,101,length.out=2), c(2:30), my_k, 0, 1)
+  bids_mat <- bid_vec(
+    my_mu,
+    my_sigma,
+    seq(-3,3,length.out=50),
+    seq(99,101,length.out=2),
+    my_c,
+    my_lambda,
+    30,
+    my_k,
+    my_mats
+  )
+
+  x <- my_sigma*seq(-3,3,length.out=50) + my_mu
+  model <- lm(bids_mat ~ x)
+
+  expect_equal(unname(model$coefficients['x']), .85, tolerance = .1)
+})
+
+
