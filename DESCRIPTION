@@ -15,4 +15,9 @@ URL: https://github.com/lukas-hager/auctioneeR
 BugReports: https://github.com/lukas-hager/auctioneeR/issues
 Imports: 
     akima,
-    stats
+    doParallel,
+    dplyr,
+    foreach,
+    parallel,
+    stats,
+    stringr

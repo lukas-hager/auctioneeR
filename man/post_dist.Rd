@@ -16,7 +16,7 @@ post_dist(x, mu_0, sigma_0, k)
 \item{k}{The coefficient on the signal standard deviation}
 }
 \value{
-A \code{stats::dnorm} object with the appropriate hyperparameters.
+A \code{\link[stats]{dnorm}} object with the appropriate hyperparameters.
 }
 \description{
 Posterior Distribution of Item's Value

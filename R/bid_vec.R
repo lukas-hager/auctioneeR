@@ -34,7 +34,7 @@ bid_vec <- function(
   a_2 <- mu_t
 
   p <- stats::dpois(2:n_max, lambda=lambda_t)
-  f_y <- rbind(sapply(c(2:n_max), function(n_val){f_y_y(x_seq, mu_t, sigma_t, n_val, k)}))
+  f_y <- rbind(sapply(c(2:n_max), function(n_val){f_y_y(mu_t+sigma_t*x_seq, mu_t, sigma_t, n_val, k)}))
   weights <- f_y %*% p
 
   bids <- rbind(
