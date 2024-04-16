@@ -1,3 +1,15 @@
+#' The numerator of the expected value calculation
+#'
+#' @param v The value of the object
+#' @param x The signal
+#' @param n The number of bidders
+#' @param mu_0 The prior mean of the value distribution
+#' @param sigma_0 The prior SD of the value distribution
+#' @param k The multiplier on the SD of the signals
+#'
+#' @return The probability of being the highest bidder weighted by the value
+#' @export
+#'
 num <- function(v, x, n, mu_0, sigma_0, k){
   # f_v <- post_dist(x,mu_0,sigma_0,k,fun='pdf')
   f_v <- stats::dnorm(v, mean=mu_0, sd=sigma_0)

@@ -1,3 +1,10 @@
+#' Prior
+#'
+#' @param params The parameters
+#'
+#' @return A boolean indicating whether a parameter vector is assigned non-zero probability under the prior
+#' @export
+#'
 prior <- function(params){
   return(
     1- max(

@@ -9,39 +9,6 @@
 #' @return The threshold signal
 #' @export
 #'
-# x_star <- function(r, lambda, mu_0, sigma_0, k, n_max){
-#   uniroot(
-#     function(x){
-#       sum(
-#         dpois(c(1:n_max), lambda) * sapply(c(1:n_max), function(n_val){
-#           riemann_sums(
-#             f=num,
-#             lower=mu_0 - 10*sigma_0,
-#             upper=mu_0 + 10*sigma_0,
-#             x=x,
-#             n=n_val,
-#             mu_0=mu_0,
-#             sigma_0=sigma_0,
-#             k=k,
-#             n_bins=1000
-#           ) / riemann_sums(
-#             f=den,
-#             lower=mu_0 - 10*sigma_0,
-#             upper=mu_0 + 10*sigma_0,
-#             x=x,
-#             n=n_val,
-#             mu_0=mu_0,
-#             sigma_0=sigma_0,
-#             k=k,
-#             n_bins=1000
-#           )
-#         })
-#       ) - r
-#     },
-#     lower = r-5*sigma_0,
-#     upper = r+10*sigma_0
-#   )$root
-# }
 x_star <- function(r, lambda, mu_0, sigma_0, splines){
   root_val <- stats::uniroot(
     function(x){

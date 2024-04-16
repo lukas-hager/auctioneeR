@@ -1,3 +1,11 @@
+#' Calculate the expected value splines for the cutoff signal
+#'
+#' @param k The multiplier on the signal SD
+#' @param n_max The maximum number of bidders
+#'
+#' @return The cutoff signal x*
+#' @export
+#'
 create_ev_splines <- function(k, n_max){
   x_seq <- seq(-5,5, length.out=20)
   spline_list <- lapply(c(1:n_max), function(n_val){

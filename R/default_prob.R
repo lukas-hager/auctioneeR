@@ -1,3 +1,19 @@
+#' The probability of default
+#'
+#' @param v The item's value
+#' @param mu_t The prior mean of the value distribution
+#' @param sigma_t The prior SD of the value distribution
+#' @param lambda_t The parameter governing the Poisson entry process
+#' @param bids Observed bids
+#' @param phi Inverse bidding function
+#' @param x_s Cutoff signal
+#' @param c Cost of default
+#' @param k Multiplier on signal SD
+#' @param n_max The maximum number of bidders
+#'
+#' @return The probability of default
+#' @export
+#'
 default_prob <- function(v, mu_t, sigma_t, lambda_t, bids, phi, x_s, c, k, n_max){
   n_bidders_observed <- length(bids)
   second_signal <- ifelse(n_bidders_observed==1, x_s, phi(bids[2]))
