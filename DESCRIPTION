@@ -18,6 +18,7 @@ Imports:
     doParallel,
     dplyr,
     foreach,
+    magrittr,
     parallel,
     stats,
     stringr

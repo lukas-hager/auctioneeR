@@ -4,7 +4,14 @@
 \alias{estimate_model}
 \title{Estimate the MCMC Model}
 \usage{
-estimate_model(data, n_steps, start_params, n_max, par = FALSE)
+estimate_model(
+  data,
+  n_steps,
+  start_params,
+  n_max,
+  par = FALSE,
+  n_cores = parallel::detectCores() - 2
+)
 }
 \arguments{
 \item{data}{The dataset of auction data}
@@ -16,6 +23,8 @@ estimate_model(data, n_steps, start_params, n_max, par = FALSE)
 \item{n_max}{The maximum number of bidders.}
 
 \item{par}{Whether or not to run the estimation in parallel}
+
+\item{n_cores}{The number of cores to run the estimation using}
 }
 \value{
 The \code{draws} object from \code{\link{mcmc}}

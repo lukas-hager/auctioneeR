@@ -9,7 +9,7 @@
 create_test_data <- function(n_sims, seed=42069){
   set.seed(seed)
 
-  n_images <- round(runif(n_sims, 2, 10))
+  n_images <- round(stats::runif(n_sims, 2, 10))
   lambda <- exp(.1 + .1*n_images)
   mu <- 50 + 2*n_images
   sigma <- 10 + .5*n_images
@@ -17,11 +17,11 @@ create_test_data <- function(n_sims, seed=42069){
   c <- 10
   r <- 25
   d_r <- .03
-  n_bidders <- rpois(n_sims, lambda)
+  n_bidders <- stats::rpois(n_sims, lambda)
   n_max <- 30
-  v <- rnorm(n=n_sims, mean=mu, sd=sigma)
+  v <- stats::rnorm(n=n_sims, mean=mu, sd=sigma)
   signals <- sapply(c(1:n_sims), function(sim_id){
-    sort(rnorm(
+    sort(stats::rnorm(
       n_bidders[sim_id],
       mean = v[sim_id],
       sd = sqrt(k)*sigma[sim_id]

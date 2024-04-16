@@ -5,6 +5,7 @@
 #' @param start_params The starting parameters for the MCMC routine.
 #' @param n_max The maximum number of bidders.
 #' @param par Whether or not to run the estimation in parallel
+#' @param n_cores The number of cores to run the estimation using
 #'
 #' @return The `draws` object from \code{\link{mcmc}}
 #' @export

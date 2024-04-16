@@ -4,7 +4,7 @@
 \alias{post_dist}
 \title{Posterior Distribution of Item's Value}
 \usage{
-post_dist(x, mu_0, sigma_0, k)
+post_dist(x, mu_0, sigma_0, k, fun = "pdf")
 }
 \arguments{
 \item{x}{The observed data.}
@@ -14,6 +14,8 @@ post_dist(x, mu_0, sigma_0, k)
 \item{sigma_0}{The prior standard deviation.}
 
 \item{k}{The coefficient on the signal standard deviation}
+
+\item{fun}{Whether to return the PDF or CDF}
 }
 \value{
 A \code{\link[stats]{dnorm}} object with the appropriate hyperparameters.

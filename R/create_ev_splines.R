@@ -24,7 +24,7 @@ create_ev_splines <- function(k, n_max){
         k=k
       )
     })
-    return(splinefun(x_seq, y, 'natural'))
+    return(stats::splinefun(x_seq, y, 'natural'))
   })
   return(spline_list)
 }

@@ -21,10 +21,10 @@ simulated_default <- function(signals, bids, xs_vals, lambda, mu, sigma, max_bid
       #     upper = mu[sim_id]+5*sigma[sim_id]
       #   )$root
       # })
-      inferred_v <- pmin(xs_vals[sim_id] - sqrt(k)*sigma[sim_id]*qnorm(1-n_bidders_observed/bidders), 1e6)
+      inferred_v <- pmin(xs_vals[sim_id] - sqrt(k)*sigma[sim_id]*stats::qnorm(1-n_bidders_observed/bidders), 1e6)
 
 
-      lambda_weights <- dpois(c(n_bidders_observed:max_bidders),lambda[sim_id])
+      lambda_weights <- stats::dpois(c(n_bidders_observed:max_bidders),lambda[sim_id])
 
       exp_val <- sum(lambda_weights * (signal_sum_observed + k*mu[sim_id] + (bidders-n_bidders_observed)*inferred_v) / (k+bidders))/sum(lambda_weights)
 

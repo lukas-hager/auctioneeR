@@ -4,7 +4,7 @@
 \alias{x_star}
 \title{Calculate the Threshold Signal Value}
 \usage{
-x_star(r, lambda, mu_0, sigma_0, k, n_max)
+x_star(r, lambda, mu_0, sigma_0, splines)
 }
 \arguments{
 \item{r}{The auction's reserve price.}
@@ -15,9 +15,7 @@ x_star(r, lambda, mu_0, sigma_0, k, n_max)
 
 \item{sigma_0}{The prior distribution's standard deviation.}
 
-\item{k}{The parameter governing the tightness of the signal distribution.}
-
-\item{n_max}{The maximum number of bidders in the auction.}
+\item{splines}{The base case splines.}
 }
 \value{
 The threshold signal

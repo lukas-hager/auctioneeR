@@ -31,7 +31,7 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
 
   for (step in (1:n_steps)){
     start <- proc.time()
-    noise <- rnorm(9, sd=params[c(1:9)]/100)
+    noise <- stats::rnorm(9, sd=params[c(1:9)]/100)
     new_params <- old_params[c(1:9)] + noise
 
     if(prior(new_params) == 0){
@@ -55,7 +55,7 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
         )
 
         alpha <- min(exp(new-old), 1)
-        accept <- runif(1) <= alpha
+        accept <- stats::runif(1) <= alpha
         if(accept){
           print(stringr::str_interp('${step}: Accepted (${unname((proc.time()-start)["elapsed"])})'))
           old_params <- new_params

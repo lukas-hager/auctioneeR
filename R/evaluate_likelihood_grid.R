@@ -75,7 +75,7 @@ evaluate_likelihood_grid  <- function(auction_data,
       if (n == 0){
         log(
           sum(
-            dpois(c(1:N_MAX), lambda_t) * sapply(
+            stats::dpois(c(1:N_MAX), lambda_t) * sapply(
               c(1:N_MAX),
               function(j){
                 riemann_sums(
@@ -88,13 +88,14 @@ evaluate_likelihood_grid  <- function(auction_data,
                   bids=bids,
                   default=default,
                   x_s=x_s,
+                  k=K,
                   lower=mu_t-5*sigma_t,
                   upper=mu_t+5*sigma_t,
                   n_bins = 100
                 )
               }
             )
-          ) + dpois(0, lambda_t)
+          ) + stats::dpois(0, lambda_t)
         )
       } else{
         # calculate inverse bid function
@@ -114,7 +115,7 @@ evaluate_likelihood_grid  <- function(auction_data,
         # calculate log-likelihood
         log(
           sum(
-            dpois(c(n:N_MAX), lambda_t) * sapply(
+            stats::dpois(c(n:N_MAX), lambda_t) * sapply(
               c(n:N_MAX),
               function(j){
                 riemann_sums(
@@ -128,6 +129,7 @@ evaluate_likelihood_grid  <- function(auction_data,
                   default=default,
                   x_s=x_s,
                   phi=phi,
+                  k=K,
                   lower=mu_t-5*sigma_t,
                   upper=mu_t+5*sigma_t,
                   n_bins = 100
@@ -147,7 +149,9 @@ evaluate_likelihood_grid  <- function(auction_data,
             phi=phi,
             signals=signals,
             default=default,
-            c=C
+            c=C,
+            k=K,
+            n_max=N_MAX
           )
         )
       }
@@ -179,7 +183,7 @@ evaluate_likelihood_grid  <- function(auction_data,
       if (n == 0){
         log(
           sum(
-            dpois(c(1:N_MAX), lambda_t) * sapply(
+            stats::dpois(c(1:N_MAX), lambda_t) * sapply(
               c(1:N_MAX),
               function(j){
                 riemann_sums(
@@ -192,13 +196,14 @@ evaluate_likelihood_grid  <- function(auction_data,
                   bids=bids,
                   default=default,
                   x_s=x_s,
+                  k=K,
                   lower=mu_t-5*sigma_t,
                   upper=mu_t+5*sigma_t,
                   n_bins = 100
                 )
               }
             )
-          ) + dpois(0, lambda_t)
+          ) + stats::dpois(0, lambda_t)
         )
       } else{
         # calculate inverse bid function
@@ -218,7 +223,7 @@ evaluate_likelihood_grid  <- function(auction_data,
         # calculate log-likelihood
         log(
           sum(
-            dpois(c(n:N_MAX), lambda_t) * sapply(
+            stats::dpois(c(n:N_MAX), lambda_t) * sapply(
               c(n:N_MAX),
               function(j){
                 riemann_sums(
@@ -232,6 +237,7 @@ evaluate_likelihood_grid  <- function(auction_data,
                   default=default,
                   x_s=x_s,
                   phi=phi,
+                  k=K,
                   lower=mu_t-5*sigma_t,
                   upper=mu_t+5*sigma_t,
                   n_bins = 100
@@ -252,7 +258,9 @@ evaluate_likelihood_grid  <- function(auction_data,
             phi=phi,
             default=default,
             x_s=x_s,
-            c=C
+            c=C,
+            k=K,
+            n_max=N_MAX
           )
         )
       }

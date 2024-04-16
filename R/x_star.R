@@ -43,13 +43,13 @@
 #   )$root
 # }
 x_star <- function(r, lambda, mu_0, sigma_0, splines){
-  root_val <- uniroot(
+  root_val <- stats::uniroot(
     function(x){
       sum(
-        dpois(c(1:length(splines)), lambda) * sapply(c(1:length(splines)), function(n_val){
+        stats::dpois(c(1:length(splines)), lambda) * sapply(c(1:length(splines)), function(n_val){
           splines[[n_val]](x)
         })
-      ) / sum(dpois(c(1:length(splines)), lambda)) - (r - mu_0)/sigma_0
+      ) / sum(stats::dpois(c(1:length(splines)), lambda)) - (r - mu_0)/sigma_0
     },
     lower = r-100,
     upper = r+100
