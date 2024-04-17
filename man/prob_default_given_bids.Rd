@@ -15,7 +15,8 @@ prob_default_given_bids(
   x_s,
   c,
   k,
-  n_max
+  n_max,
+  dr
 )
 }
 \arguments{
@@ -40,6 +41,11 @@ prob_default_given_bids(
 \item{k}{The multiplier on the SD of the bidder's signals}
 
 \item{n_max}{The max number of bidders}
+
+\item{dr}{The base rate default probability}
+}
+\value{
+A default probability for a set of bids
 }
 \description{
 Calculate the probability of default given bids.

@@ -11,8 +11,9 @@
 #' @param c The cost of default
 #' @param k The multiplier on the SD of the bidder's signals
 #' @param n_max The max number of bidders
+#' @param dr The base rate default probability
 #'
-#' @return
+#' @return A default probability for a set of bids
 #' @export
 #'
 prob_default_given_bids <- function(v, mu_t, sigma_t, lambda_t, bids, phi, default, x_s, c, k, n_max, dr){

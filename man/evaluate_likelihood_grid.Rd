@@ -8,12 +8,15 @@ evaluate_likelihood_grid(
   auction_data,
   MU_INT,
   MU_N_IMAGE,
+  MU_YEAR,
   SIGMA_INT,
   SIGMA_N_IMAGE,
-  K,
-  C,
+  SIGMA_YEAR,
   L_INT,
   L_N_IMAGE,
+  L_YEAR,
+  K,
+  C,
   D_R,
   N_MAX,
   par = FALSE
@@ -26,17 +29,23 @@ evaluate_likelihood_grid(
 
 \item{MU_N_IMAGE}{The coefficient on \code{n_images} of the \code{\eqn{\mu}} parameter}
 
+\item{MU_YEAR}{The coefficient on \code{year}}
+
 \item{SIGMA_INT}{The intercept of the \code{\eqn{\sigma}} parameter}
 
 \item{SIGMA_N_IMAGE}{The coefficient on \code{n_images} of the \code{\eqn{\sigma}} parameter}
 
-\item{K}{The multiplier on}
-
-\item{C}{a}
+\item{SIGMA_YEAR}{The coefficient on \code{year}}
 
 \item{L_INT}{a}
 
 \item{L_N_IMAGE}{a}
+
+\item{L_YEAR}{The coefficient on \code{year}}
+
+\item{K}{The multiplier on}
+
+\item{C}{a}
 
 \item{D_R}{a}
 

@@ -5,6 +5,9 @@
 #' @param MU_N_IMAGE The coefficient on `n_images` of the \code{\eqn{\mu}} parameter
 #' @param SIGMA_INT The intercept of the \code{\eqn{\sigma}} parameter
 #' @param SIGMA_N_IMAGE The coefficient on `n_images` of the \code{\eqn{\sigma}} parameter
+#' @param MU_YEAR The coefficient on `year`
+#' @param SIGMA_YEAR The coefficient on `year`
+#' @param L_YEAR The coefficient on `year`
 #' @param K The multiplier on
 #' @param C a
 #' @param L_INT a
