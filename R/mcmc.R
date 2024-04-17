@@ -13,7 +13,7 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
   set.seed(42069)
   out_vec <- c()
   errors <- c()
-  old_params <- params[c(1:9)]
+  old_params <- params
   old <- evaluate_likelihood_grid(
     data,
     params[1],
@@ -25,14 +25,17 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
     params[7],
     params[8],
     params[9],
+    params[10],
+    params[11],
+    params[12],
     n_max,
     par
   )
 
   for (step in (1:n_steps)){
     start <- proc.time()
-    noise <- stats::rnorm(9, sd=params[c(1:9)]/100)
-    new_params <- old_params[c(1:9)] + noise
+    noise <- stats::rnorm(length(params), sd=abs(params)/100)
+    new_params <- old_params + noise
 
     if(prior(new_params) == 0){
       print(stringr::str_interp('${step}: Prior is zero'))
@@ -50,6 +53,9 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
           new_params[7],
           new_params[8],
           new_params[9],
+          new_params[10],
+          new_params[11],
+          new_params[12],
           n_max,
           par
         )

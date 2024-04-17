@@ -18,8 +18,8 @@ x_star <- function(r, lambda, mu_0, sigma_0, splines){
         })
       ) / sum(stats::dpois(c(1:length(splines)), lambda)) - (r - mu_0)/sigma_0
     },
-    lower = r-100,
-    upper = r+100
+    lower = r-1000,
+    upper = r+1000
   )$root
   return(sigma_0 * root_val + mu_0)
 }

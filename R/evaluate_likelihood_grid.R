@@ -19,12 +19,15 @@
 evaluate_likelihood_grid  <- function(auction_data,
                                       MU_INT,
                                       MU_N_IMAGE,
+                                      MU_YEAR,
                                       SIGMA_INT,
                                       SIGMA_N_IMAGE,
-                                      K,
-                                      C,
+                                      SIGMA_YEAR,
                                       L_INT,
                                       L_N_IMAGE,
+                                      L_YEAR,
+                                      K,
+                                      C,
                                       D_R,
                                       N_MAX,
                                       par=FALSE){
@@ -46,12 +49,12 @@ evaluate_likelihood_grid  <- function(auction_data,
     }
   }
 
-  splines <- create_ev_splines(.5, N_MAX)
+  splines <- create_ev_splines(K, N_MAX)
 
   auction_data_iter <- auction_data %>%
-    dplyr::mutate(lambda_t = exp(L_INT + L_N_IMAGE*n_images),
-                  mu_t = MU_INT + MU_N_IMAGE*n_images,
-                  sigma_t = SIGMA_INT + SIGMA_N_IMAGE*n_images)
+    dplyr::mutate(lambda_t = exp(L_INT + L_N_IMAGE*n_images + L_YEAR*year),
+                  mu_t = MU_INT + MU_N_IMAGE*n_images + MU_YEAR*year,
+                  sigma_t = SIGMA_INT + SIGMA_N_IMAGE*n_images + SIGMA_YEAR*year)
 
   if(!par){
     ll <- sapply(c(1:nrow(auction_data)), function(i){
@@ -147,7 +150,6 @@ evaluate_likelihood_grid  <- function(auction_data,
             sigma_t=sigma_t,
             bids=bids,
             phi=phi,
-            signals=signals,
             default=default,
             c=C,
             k=K,
@@ -169,8 +171,6 @@ evaluate_likelihood_grid  <- function(auction_data,
       r <- auction_data_iter[i, 'r']
       default <- auction_data_iter[i, 'default']
       bids <- auction_data_iter[i, 'bids'][[1]]
-      signals <- auction_data_iter[i, 'signals'][[1]]
-      v <- auction_data_iter[i, 'v']
 
       # calculate the scaling multipliers for the signals
       a_1 <- sigma_t/sigma_0
@@ -197,8 +197,8 @@ evaluate_likelihood_grid  <- function(auction_data,
                   default=default,
                   x_s=x_s,
                   k=K,
-                  lower=mu_t-5*sigma_t,
-                  upper=mu_t+5*sigma_t,
+                  lower=mu_t-20*sigma_t,
+                  upper=mu_t+20*sigma_t,
                   n_bins = 100
                 )
               }
@@ -238,8 +238,8 @@ evaluate_likelihood_grid  <- function(auction_data,
                   x_s=x_s,
                   phi=phi,
                   k=K,
-                  lower=mu_t-5*sigma_t,
-                  upper=mu_t+5*sigma_t,
+                  lower=mu_t-20*sigma_t,
+                  upper=mu_t+20*sigma_t,
                   n_bins = 100
                 )
               }
@@ -248,8 +248,8 @@ evaluate_likelihood_grid  <- function(auction_data,
         ) + log(
           riemann_sums(
             f=prob_default_given_bids,
-            lower=mu_t-5*sigma_t,
-            upper=mu_t+5*sigma_t,
+            lower=mu_t-20*sigma_t,
+            upper=mu_t+20*sigma_t,
             n_bins=100,
             mu_t=mu_t,
             sigma_t=sigma_t,
@@ -260,7 +260,8 @@ evaluate_likelihood_grid  <- function(auction_data,
             x_s=x_s,
             c=C,
             k=K,
-            n_max=N_MAX
+            n_max=N_MAX,
+            dr=1e-7
           )
         )
       }
