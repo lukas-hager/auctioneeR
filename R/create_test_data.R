@@ -10,9 +10,10 @@ create_test_data <- function(n_sims, seed=42069){
   set.seed(seed)
 
   n_images <- round(stats::runif(n_sims, 2, 10))
-  lambda <- exp(.1 + .1*n_images)
-  mu <- 50 + 2*n_images
-  sigma <- 10 + .5*n_images
+  years <- round(stats::runif(n_sims, 1780, 2010))
+  lambda <- exp(.1 + .1*n_images - .0001*years)
+  mu <- 50 + 2*n_images - .001*years
+  sigma <- 10 + .5*n_images  - .0005*years
   k <- .5
   c <- 10
   r <- 25
@@ -59,6 +60,7 @@ create_test_data <- function(n_sims, seed=42069){
   return(
     auction_data <- data.frame(
       n_images,
+      years,
       r,
       xs_vals,
       v,
