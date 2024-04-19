@@ -25,15 +25,15 @@ evaluate_likelihood_grid(
 \arguments{
 \item{auction_data}{The dataset to calculate likelihood over}
 
-\item{MU_INT}{The intercept of the \code{\eqn{\mu}} parameter}
+\item{MU_INT}{The intercept of the \eqn{\mu} parameter}
 
-\item{MU_N_IMAGE}{The coefficient on \code{n_images} of the \code{\eqn{\mu}} parameter}
+\item{MU_N_IMAGE}{The coefficient on \code{n_images} of the \eqn{\mu} parameter}
 
 \item{MU_YEAR}{The coefficient on \code{year}}
 
-\item{SIGMA_INT}{The intercept of the \code{\eqn{\sigma}} parameter}
+\item{SIGMA_INT}{The intercept of the \eqn{\sigma} parameter}
 
-\item{SIGMA_N_IMAGE}{The coefficient on \code{n_images} of the \code{\eqn{\sigma}} parameter}
+\item{SIGMA_N_IMAGE}{The coefficient on \code{n_images} of the \eqn{\sigma} parameter}
 
 \item{SIGMA_YEAR}{The coefficient on \code{year}}
 
