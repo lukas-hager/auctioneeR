@@ -1,10 +1,10 @@
 #' Calculate the likelihood of the data for a set of parameters
 #'
 #' @param auction_data The dataset to calculate likelihood over
-#' @param MU_INT The intercept of the \code{\eqn{\mu}} parameter
-#' @param MU_N_IMAGE The coefficient on `n_images` of the \code{\eqn{\mu}} parameter
-#' @param SIGMA_INT The intercept of the \code{\eqn{\sigma}} parameter
-#' @param SIGMA_N_IMAGE The coefficient on `n_images` of the \code{\eqn{\sigma}} parameter
+#' @param MU_INT The intercept of the \eqn{\mu} parameter
+#' @param MU_N_IMAGE The coefficient on `n_images` of the \eqn{\mu} parameter
+#' @param SIGMA_INT The intercept of the \eqn{\sigma} parameter
+#' @param SIGMA_N_IMAGE The coefficient on `n_images` of the \eqn{\sigma} parameter
 #' @param MU_YEAR The coefficient on `year`
 #' @param SIGMA_YEAR The coefficient on `year`
 #' @param L_YEAR The coefficient on `year`
@@ -55,9 +55,9 @@ evaluate_likelihood_grid  <- function(auction_data,
   splines <- create_ev_splines(K, N_MAX)
 
   auction_data_iter <- auction_data %>%
-    dplyr::mutate(lambda_t = exp(L_INT + L_N_IMAGE*n_images + L_YEAR*year),
-                  mu_t = MU_INT + MU_N_IMAGE*n_images + MU_YEAR*year,
-                  sigma_t = SIGMA_INT + SIGMA_N_IMAGE*n_images + SIGMA_YEAR*year)
+    dplyr::mutate(lambda_t = exp(L_INT + L_N_IMAGE*auction_data$n_images + L_YEAR*auction_data$year),
+                  mu_t = MU_INT + MU_N_IMAGE*auction_data$n_images + MU_YEAR*auction_data$year,
+                  sigma_t = SIGMA_INT + SIGMA_N_IMAGE*auction_data$n_images + SIGMA_YEAR*auction_data$year)
 
   if(!par){
     ll <- sapply(c(1:nrow(auction_data)), function(i){
