@@ -6,7 +6,7 @@ This is a (silly-named) package to implement the estimation in my paper on aucti
 
 To run the estimation with some simulated data, use the following vignette:
 
-```
+```r
 library(devtools)
 install_github('lukas-hager/auctioneeR', force=TRUE)
 
