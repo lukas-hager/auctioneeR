@@ -60,6 +60,11 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
           par
         )
 
+        if(is.nan(old)){
+          print('NaN Returned')
+          print(new_params)
+        }
+
         a <- min(exp(new-old), 1)
         alpha <- ifelse(is.nan(a), 0, a)
         accept <- stats::runif(1) <= alpha
