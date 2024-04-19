@@ -25,9 +25,9 @@ true_params <- c(
   .02
 )
 
-auction_data <- create_test_data(100)
+auction_data <- auctioneeR::create_test_data(100)
 
 start_params <- true_params * .9
 
-out <- estimate_model(auction_data, 10, start_params, 30, TRUE)
+out <- auctioneeR::estimate_model(auction_data, 10, start_params, 30, TRUE)
 ```
