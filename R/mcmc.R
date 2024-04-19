@@ -60,7 +60,8 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
           par
         )
 
-        alpha <- min(exp(new-old), 1)
+        a <- min(exp(new-old), 1)
+        alpha <- ifelse(is.nan(a), 0, a)
         accept <- stats::runif(1) <= alpha
         if(accept){
           print(stringr::str_interp('${step}: Accepted (${unname((proc.time()-start)["elapsed"])})'))
@@ -74,8 +75,9 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
       },
       error = function(cond){
         message(conditionMessage(cond))
-        errors <- c(errors, new_params)
-        rep(NA, length(new_params))
+        print(old_params)
+        print(new_params)
+        errors <<- c(errors, new_params)
       })
     }
   }
