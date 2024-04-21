@@ -57,7 +57,7 @@ evaluate_likelihood_grid  <- function(auction_data,
   auction_data_iter <- auction_data %>%
     dplyr::mutate(lambda_t = exp(L_INT + L_N_IMAGE*auction_data$n_images + L_YEAR*auction_data$year),
                   mu_t = MU_INT + MU_N_IMAGE*auction_data$n_images + MU_YEAR*auction_data$year,
-                  sigma_t = SIGMA_INT + SIGMA_N_IMAGE*auction_data$n_images + SIGMA_YEAR*auction_data$year)
+                  sigma_t = exp(SIGMA_INT + SIGMA_N_IMAGE*auction_data$n_images + SIGMA_YEAR*auction_data$year))
 
   if(!par){
     ll <- sapply(c(1:nrow(auction_data)), function(i){

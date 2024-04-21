@@ -60,7 +60,7 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
           par
         )
 
-        if(is.nan(old)){
+        if(is.nan(new)){
           print('NaN Returned')
           print(new_params)
         }

@@ -24,5 +24,5 @@ prob_bids <- function(v, j, n, mu_t, sigma_t, lambda_t, bids, default, phi, x_s,
     rep(log(1), length(v))
   )
   e <- log(stats::dnorm(v, mean = mu_t, sd = sigma_t))
-  exp(a+b+c+e)
+  ifelse(rep(j==n, length(v)), exp(b+c+e), exp(a+b+c+e))
 }
