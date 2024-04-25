@@ -5,10 +5,11 @@
 #' @return A ggplot of the parameters
 #' @export
 #'
-assessment <- function(df_fp){
+assessment <- function(df_fp, burn_in=10000){
   df <- read_csv(df_fp, show_col_types = FALSE)
   df_long <- df %>%
     mutate(id = row_number()) %>%
+    filter(id > burn_in) %>%
     pivot_longer(cols = c(MU_INT:D_R))
 
   print(
@@ -23,7 +24,9 @@ assessment <- function(df_fp){
       group_by(name) %>%
       summarise(mean = mean(value, na.rm=TRUE),
                 median = median(value, na.rm=TRUE),
-                sd = sd(value, na.rm=TRUE))
+                sd = sd(value, na.rm=TRUE)) %>%
+      mutate(t_stat = mean/sd,
+             sig = abs(t_stat) > 2)
   )
 }
 

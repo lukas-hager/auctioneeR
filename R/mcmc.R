@@ -34,7 +34,7 @@ mcmc <- function(data, n_steps, params, n_max, par=FALSE){
 
   for (step in (1:n_steps)){
     start <- proc.time()
-    noise <- stats::rnorm(length(params), sd=abs(params)/100)
+    noise <- stats::rnorm(length(params), sd=abs(params)/300)
     new_params <- old_params + noise
 
     if(prior(new_params) == 0){
