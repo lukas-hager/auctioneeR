@@ -18,7 +18,11 @@ Imports:
     doParallel,
     dplyr,
     foreach,
+    ggplot2,
     magrittr,
     parallel,
+    readr,
+    scales,
     stats,
-    stringr
+    stringr,
+    tidyr

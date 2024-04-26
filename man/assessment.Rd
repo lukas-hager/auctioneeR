@@ -4,10 +4,14 @@
 \alias{assessment}
 \title{Assess the output of the model}
 \usage{
-assessment(df_fp)
+assessment(df_fp, burn_in = 10000, table = TRUE)
 }
 \arguments{
 \item{df_fp}{A filepath for a excel sheet of draws}
+
+\item{burn_in}{The size of initial samples to throw away.}
+
+\item{table}{Whether or not to return the data}
 }
 \value{
 A ggplot of the parameters
