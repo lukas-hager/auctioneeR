@@ -25,4 +25,6 @@ Imports:
     scales,
     stats,
     stringr,
-    tidyr
+    tidyr,
+Depends:
+    data.table

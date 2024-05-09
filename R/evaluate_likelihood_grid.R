@@ -34,24 +34,11 @@ evaluate_likelihood_grid  <- function(auction_data,
                                       D_R,
                                       N_MAX,
                                       par=FALSE){
-
-  # solve the normalized auction for a grid of signals and costs, as well as for
-  # all possible number of bidders
   start <- proc.time()
-  mu_0 <- 0
-  sigma_0 <- 1
-  c_seq <- seq(.01, 5*sigma_0, length.out = 20)
-  x_seq <- seq(mu_0 - 5*sigma_0, mu_0 + 5*sigma_0, length.out = 20)
-  n_seq <- c(2:N_MAX)
-  bmat <- lapply(n_seq, function(n){matrix(nrow = length(c_seq), ncol = length(x_seq))})
-  for (i_val in c(1:length(c_seq))){
-    for (j_val in c(1:length(x_seq))){
-      for (n_val in c(1:length(n_seq))){
-        bmat[[n_val]][i_val,j_val] <- bid(x_seq[j_val], n_seq[n_val], c_seq[i_val], K, mu_0, sigma_0)
-      }
-    }
-  }
 
+  x_seq <- seq(-5, 5, length.out = 20)
+  c_seq <- seq(.01, 5, length.out = 20)
+  bmat <- bid_mats(K, N_MAX, x_seq, c_seq)
   splines <- create_ev_splines(K, N_MAX)
 
   auction_data_iter <- auction_data %>%
@@ -71,8 +58,8 @@ evaluate_likelihood_grid  <- function(auction_data,
       bids <- auction_data_iter[i, 'bids'][[1]]
 
       # calculate the scaling multipliers for the signals
-      a_1 <- sigma_t/sigma_0
-      a_2 <- mu_t-mu_0*a_1
+      a_1 <- sigma_t
+      a_2 <- mu_t
 
       # get the screening level
       x_s <- x_star(r, lambda_t, mu_t, sigma_t, splines)
@@ -108,8 +95,8 @@ evaluate_likelihood_grid  <- function(auction_data,
         phi <- calc_phi_grid(
           mu_t,
           sigma_t,
-          mu_0,
-          sigma_0,
+          mu_0=0,
+          sigma_0=1,
           x_seq,
           c_seq,
           C / a_1,
@@ -176,8 +163,8 @@ evaluate_likelihood_grid  <- function(auction_data,
       bids <- auction_data_iter[i, 'bids'][[1]]
 
       # calculate the scaling multipliers for the signals
-      a_1 <- sigma_t/sigma_0
-      a_2 <- mu_t-mu_0*a_1
+      a_1 <- sigma_t
+      a_2 <- mu_t
 
       # get the screening level
       x_s <- x_star(r, lambda_t, mu_t, sigma_t, splines)
@@ -213,8 +200,8 @@ evaluate_likelihood_grid  <- function(auction_data,
         phi <- calc_phi_grid(
           mu_t,
           sigma_t,
-          mu_0,
-          sigma_0,
+          mu_0=0,
+          sigma_0=1,
           x_seq,
           c_seq,
           C / a_1,

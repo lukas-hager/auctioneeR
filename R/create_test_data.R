@@ -13,7 +13,7 @@ create_test_data <- function(n_sims, seed=42069){
   years <- round(stats::runif(n_sims, 1780, 2010))
   lambda <- exp(.1 + .1*n_images - .0001*years)
   mu <- 50 + 2*n_images - .001*years
-  sigma <- 10 + .5*n_images  - .0005*years
+  sigma <- exp(2 + .25*n_images  - .0005*years)
   k <- .5
   c <- 10
   r <- 25
@@ -32,13 +32,20 @@ create_test_data <- function(n_sims, seed=42069){
   xs_vals <- sapply(c(1:n_sims), function(sim_id){
     x_star(r, lambda[sim_id], mu[sim_id], sigma[sim_id], splines)
   })
+  mu_0 <- 0
+  sigma_0 <- 1
+  x_seq <- seq(mu_0 - 5*sigma_0, mu_0 + 5*sigma_0, length.out = 20)
+  diff_vals <- seq(-4, 0, length.out=20)
+  n_seq <- c(2:n_max)
+  # create interpolation grids for beliefs about default
+  interp_grids <- create_interp_mats(k, n_max, x_seq, diff_vals)
   bids <- sapply(c(1:n_sims),function(sim_id){
     x_i <- signals[[sim_id]]
     if (length(x_i)==0){
       return(numeric(0))
     } else{
       xs <- xs_vals[sim_id]
-      return(sort(bid_vec_individual(mu[sim_id], sigma[sim_id], c, lambda[sim_id], k, x_i, n_max)[x_i >= xs], decreasing=TRUE))
+      return(sort(bid_vec_individual(mu[sim_id], sigma[sim_id], c, lambda[sim_id], k, x_i, n_max, interp_grids, x_seq, diff_vals)[x_i >= xs], decreasing=TRUE))
     }
   })
   shown_bids <- sapply(bids, function(b_i){

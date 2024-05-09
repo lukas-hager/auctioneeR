@@ -4,18 +4,18 @@
 #'
 #'
 #' @param b The proposed bid.
-#' @param mu_0 The prior mean.
-#' @param sigma_0 The prior SD.
-#' @param x_i The bidder's signal.
 #' @param n The number of bidders.
 #' @param c The cost of default.
 #' @param k The coefficient on the signal standard variance.
+#' @param my_signal The bidder's signal
+#' @param interps The matrices used for interpolation
 #'
 #' @return The error of the equilibrium function at bid `b`.
 #' @export
 #'
 
-eqm <- function(b, mu_0, sigma_0, x_i, n, c, k){
-  p_default <- post_mean_cdf(b-c, mu_0, sigma_0, x_i, n, k)
-  p_default*c + (1-p_default)*b - (1-p_default) * post_mean_exp(x_i, mu_0, sigma_0, n, k, lb=b-c)
+eqm <- function(b, my_signal, n, c, k, interps){
+  threshold_x_bar <- h_inv(b-c,0,my_signal,n,k)
+  p_default <- threshold_x_bar > my_signal + (threshold_x_bar <= my_signal) * pmin(pmax(interps[['F']](threshold_x_bar),0), 1)
+  p_default*c + (1-p_default)*b - (1-p_default) * h(my_signal, interps[['E']](threshold_x_bar), 0, n, k)
 }

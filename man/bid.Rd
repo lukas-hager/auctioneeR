@@ -4,7 +4,7 @@
 \alias{bid}
 \title{Bid Function}
 \usage{
-bid(x_i, n, c, k, mu_0, sigma_0)
+bid(x_i, n, c, k, interps)
 }
 \arguments{
 \item{x_i}{The bidder's signal.}
@@ -15,9 +15,7 @@ bid(x_i, n, c, k, mu_0, sigma_0)
 
 \item{k}{The coefficient on the signal standard variance.}
 
-\item{mu_0}{The prior mean.}
-
-\item{sigma_0}{The prior standard deviation.}
+\item{interps}{The matrices used for interpolation}
 }
 \value{
 The equilibrium bid \eqn{\beta(x_i)}

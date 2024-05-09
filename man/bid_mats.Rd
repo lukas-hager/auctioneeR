@@ -4,20 +4,16 @@
 \alias{bid_mats}
 \title{Calculates matrices of optimal bids for interpolation.}
 \usage{
-bid_mats(x_seq, c_seq, n_seq, k, mu_base, sigma_base)
+bid_mats(k, n_max, x_seq, c_seq)
 }
 \arguments{
-\item{x_seq}{Sequence of signals for which to compute bids for interpolation.}
-
-\item{c_seq}{Sequence of default costs for which to compute bids for interpolation.}
-
-\item{n_seq}{The possible numbers of bidders.}
-
 \item{k}{The coefficient on the signal standard variance.}
 
-\item{mu_base}{The base auction mean.}
+\item{n_max}{The maximum number of bidders in the auction.}
 
-\item{sigma_base}{The base auction SD.}
+\item{x_seq}{The grid of signal values}
+
+\item{c_seq}{The grid of default cost values}
 }
 \value{
 A list of bidding matrices for each set of parameters.

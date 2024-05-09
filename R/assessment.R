@@ -10,7 +10,7 @@
 assessment <- function(df_fp, burn_in=10000, table=TRUE){
   df <- readr::read_csv(df_fp, show_col_types = FALSE)
   df_long <- df %>%
-    dplyr::mutate(id = row_number()) %>%
+    dplyr::mutate(id = dplyr::row_number()) %>%
     dplyr::filter(id > burn_in) %>%
     tidyr::pivot_longer(cols = c(MU_INT:D_R))
 
@@ -28,8 +28,8 @@ assessment <- function(df_fp, burn_in=10000, table=TRUE){
       df_long %>%
         dplyr::group_by(name) %>%
         dplyr::summarise(mean = mean(value, na.rm=TRUE),
-                         median = median(value, na.rm=TRUE),
-                         sd = sd(value, na.rm=TRUE)) %>%
+                         median = stats::median(value, na.rm=TRUE),
+                         sd = stats::sd(value, na.rm=TRUE)) %>%
         dplyr::mutate(t_stat = mean/sd,
                       sig = abs(t_stat) > 2)
     )

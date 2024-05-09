@@ -14,6 +14,6 @@
 
 h_inv <- function(mu_1,mu_0,x_i,n,k){
   return(
-    ((n+k)*mu_1-k*mu_0-x_i)/(n-1)
+    ((n+k)*mu_1-k*mu_0-2*x_i)/(n-2)
   )
 }
