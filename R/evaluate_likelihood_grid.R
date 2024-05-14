@@ -39,12 +39,12 @@ evaluate_likelihood_grid  <- function(auction_data,
   x_seq <- seq(-5, 5, length.out = 20)
   c_seq <- seq(.01, 5, length.out = 20)
   bmat <- bid_mats(K, N_MAX, x_seq, c_seq)
-  splines <- create_ev_splines(K, N_MAX)
+  # splines <- create_ev_splines(K, N_MAX)
 
-  auction_data_iter <- auction_data %>%
-    dplyr::mutate(lambda_t = exp(L_INT + L_N_IMAGE*auction_data$n_images + L_YEAR*auction_data$year),
-                  mu_t = MU_INT + MU_N_IMAGE*auction_data$n_images + MU_YEAR*auction_data$year,
-                  sigma_t = exp(SIGMA_INT + SIGMA_N_IMAGE*auction_data$n_images + SIGMA_YEAR*auction_data$year))
+  auction_data_iter <- create_auction_params(
+    auction_data,L_INT,L_N_IMAGE,L_YEAR,MU_INT,
+    MU_N_IMAGE,MU_YEAR,SIGMA_INT,SIGMA_N_IMAGE,SIGMA_YEAR
+  )
 
   if(!par){
     ll <- sapply(c(1:nrow(auction_data)), function(i){
@@ -166,8 +166,25 @@ evaluate_likelihood_grid  <- function(auction_data,
       a_1 <- sigma_t
       a_2 <- mu_t
 
+      # calculate inverse bid function
+      phi <- calc_phi_grid(
+        mu_t,
+        sigma_t,
+        mu_0=0,
+        sigma_0=1,
+        x_seq,
+        c_seq,
+        C / a_1,
+        lambda_t,
+        N_MAX,
+        K,
+        bmat
+      )
+
       # get the screening level
-      x_s <- x_star(r, lambda_t, mu_t, sigma_t, splines)
+      # x_s <- x_star(r, lambda_t, mu_t, sigma_t, splines)
+
+      x_s <- phi(r)
 
       # if no bids, return just probability of no bids
       if (n == 0){
@@ -196,20 +213,6 @@ evaluate_likelihood_grid  <- function(auction_data,
           ) + stats::dpois(0, lambda_t)
         )
       } else{
-        # calculate inverse bid function
-        phi <- calc_phi_grid(
-          mu_t,
-          sigma_t,
-          mu_0=0,
-          sigma_0=1,
-          x_seq,
-          c_seq,
-          C / a_1,
-          lambda_t,
-          N_MAX,
-          K,
-          bmat
-        )
         # calculate log-likelihood
         log(
           sum(
