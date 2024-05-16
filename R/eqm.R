@@ -14,8 +14,8 @@
 #' @export
 #'
 
-eqm <- function(b, my_signal, n, c, k, interps){
-  threshold_x_bar <- h_inv(b-c,0,my_signal,n,k)
+eqm <- function(b, my_signal, n_max, c, k, interps, weights){
+  threshold_x_bar <- h_inv(b-c,0,my_signal,c(2:n_max),k)
   p_default <- threshold_x_bar > my_signal + (threshold_x_bar <= my_signal) * pmin(pmax(interps[['F']](threshold_x_bar),0), 1)
   p_default*c + (1-p_default)*b - (1-p_default) * h(my_signal, interps[['E']](threshold_x_bar), 0, n, k)
 }

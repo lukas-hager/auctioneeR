@@ -30,3 +30,25 @@ bid_mats <- function(k, n_max, x_seq, c_seq){
   return(bmat)
 }
 
+bid_mats <- function(k, n_max, x_seq, c_seq){
+  diff_vals <- seq(-4, 0, length.out=20)
+
+  # create interpolation grids for beliefs about default
+  interp_grids <- create_interp_mats(k, n_max, x_seq, diff_vals)
+
+  # solve the normalized auction for a grid of signals and costs, as well as for
+  # all possible number of bidders
+  n_seq <- c(2:n_max)
+  bmat <- lapply(n_seq, function(n){matrix(nrow = length(c_seq), ncol = length(x_seq))})
+  for (j_val in c(1:length(x_seq))){
+    interps <- lapply(n_seq, function(n_val){
+      get_moments(x_seq[j_val], n_seq[n_val], interp_grids, x_seq, diff_vals)
+    })
+    f_weights <- sapply(c(2:n_max), function(n){f_y_y(x_seq[j_val], 0, 1, n, k)})
+    p_weights <- dpois()
+    for (i_val in c(1:length(c_seq))){
+      bmat[i_val,j_val] <- bid(x_seq[j_val], n_seq[n_val], c_seq[i_val], k, interps)
+    }
+  }
+  return(bmat)
+}

@@ -34,7 +34,7 @@ maximize_counterfactual <- function(auction_data_fp, param_fp, burn_in=10000){
   x_seq <- seq(-5, 5, length.out = 20)
   c_seq <- seq(.01, 5, length.out = 20)
   bmat <- bid_mats(k, N_MAX, x_seq, c_seq)
-  splines <- create_ev_splines(k, N_MAX)
+  # splines <- create_ev_splines(k, N_MAX)
   # xs <- x_star(r, lambda_t, mu_t, sigma_t, splines)
 
   n_bidders <- rep(c(1:30), n_sims)
@@ -50,13 +50,13 @@ maximize_counterfactual <- function(auction_data_fp, param_fp, burn_in=10000){
   )
 
   auction_data_w_params$bpc <- sapply(c(1:nrow(auction_data_w_params)), function(i){
-    auction_data_w_params$sigma_t[i]*calc_bid_prep_cost(
-      params$C/auction_data_w_params$sigma_t[i],
-      0,
-      1,
+    calc_bid_prep_cost(
+      params$C,
+      auction_data_w_params$mu_t[i],
+      auction_data_w_params$sigma_t[i],
       auction_data_w_params$r[i],
-      auction_data_w_params$lambda_t[i]
-    ) + auction_data_w_params$mu_t[i]
+      auction_data_w_params$lambda_t[i]-3
+    )
   })
 
 
@@ -65,19 +65,19 @@ maximize_counterfactual <- function(auction_data_fp, param_fp, burn_in=10000){
 #
 #
 # c <- params$C
-# mu_t <- auction_data_w_params$mu_t[1]
-# sigma_t <- auction_data_w_params$sigma_t[1]
-# r_t <- auction_data_w_params$r[1]
-# lambda_t <- auction_data_w_params$lambda_t[1]
-#
-#
-#
-#
-#
-#
-#
-#
-#
+# mu_t <- auction_data_w_params$mu_t[3]
+# sigma_t <- auction_data_w_params$sigma_t[3]
+# r_t <- auction_data_w_params$r[3]
+# lambda_t <- auction_data_w_params$lambda_t[3]
+# bid_prep_cost <- auction_data_w_params$bpc[2]
+# #
+# #
+# #
+# #
+# #
+# #
+# #
+# #
 # calc_bid_prep_cost <- function(c, mu_t, sigma_t, r_t, lambda_t){
 #   a_1 <- sigma_t
 #   a_2 <- mu_t
@@ -117,7 +117,7 @@ maximize_counterfactual <- function(auction_data_fp, param_fp, burn_in=10000){
 #
 #   dt2 = dt1[
 #     ,
-#     .(mean_rev = mean(revenue), mean_payoff = mean(payoff)),
+#     .(mean_rev = mean(revenue), mean_payoff = mean(payoff), defaults = sum(default)),
 #     by='n'
 #   ]
 #
@@ -154,7 +154,7 @@ maximize_counterfactual <- function(auction_data_fp, param_fp, burn_in=10000){
 #                      is.na(price) | price < r_t, price := r_t
 #                    ][
 #                      ,
-#                      'default' := (mean + mu_t*k)/(n+k) < price - c
+#                      'default' := (n*mean + mu_t*k)/(n+k) < price - c
 #                    ][
 #                      ,
 #                      'revenue' := default * c + (1-default) * price
@@ -171,7 +171,7 @@ maximize_counterfactual <- function(auction_data_fp, param_fp, burn_in=10000){
 #
 #       sum(dpois(c(1:30), new_l) * dt2$mean_payoff/c(1:30)) - bid_prep_cost
 #     },
-#     lower=.001,
+#     lower=.0001,
 #     upper=10
 #   )$root
 #

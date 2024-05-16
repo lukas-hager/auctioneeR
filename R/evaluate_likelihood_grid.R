@@ -37,9 +37,25 @@ evaluate_likelihood_grid  <- function(auction_data,
   start <- proc.time()
 
   x_seq <- seq(-5, 5, length.out = 20)
-  c_seq <- seq(.01, 5, length.out = 20)
-  bmat <- bid_mats(K, N_MAX, x_seq, c_seq)
-  # splines <- create_ev_splines(K, N_MAX)
+  diff_vals <- seq(-4, 0, length.out=20)
+
+  # create interpolation grids for beliefs about default
+  interp_grids <- create_interp_mats(K, N_MAX, x_seq, diff_vals)
+
+  # get the values of the interpolations at the points we assess
+
+  n_seq <- c(2:30)
+  interps <- lapply(x_seq, function(x_val){
+    lapply(n_seq, function(n_val){
+      get_moments(x_val, n_val, interp_grids, x_seq, diff_vals)
+    })
+  })
+
+  f_weights <- rbind(
+    sapply(x_seq, function(x_val){
+      sapply(n_seq, function(n){f_y_y(x_val, 0, 1, n, K)})
+    })
+  )
 
   auction_data_iter <- create_auction_params(
     auction_data,L_INT,L_N_IMAGE,L_YEAR,MU_INT,
@@ -162,23 +178,36 @@ evaluate_likelihood_grid  <- function(auction_data,
       default <- auction_data_iter[i, 'default']
       bids <- auction_data_iter[i, 'bids'][[1]]
 
-      # calculate the scaling multipliers for the signals
-      a_1 <- sigma_t
-      a_2 <- mu_t
+      # # calculate the scaling multipliers for the signals
+      # a_1 <- sigma_t
+      # a_2 <- mu_t
+      #
+      # # calculate inverse bid function
+      # phi <- calc_phi_grid(
+      #   mu_t,
+      #   sigma_t,
+      #   mu_0=0,
+      #   sigma_0=1,
+      #   x_seq,
+      #   c_seq,
+      #   C / a_1,
+      #   lambda_t,
+      #   N_MAX,
+      #   K,
+      #   bmat
+      # )
 
-      # calculate inverse bid function
-      phi <- calc_phi_grid(
+      phi <- calc_phi_individual(
         mu_t,
         sigma_t,
-        mu_0=0,
-        sigma_0=1,
-        x_seq,
-        c_seq,
-        C / a_1,
         lambda_t,
-        N_MAX,
         K,
-        bmat
+        C,
+        interps,
+        x_seq[c(1,7,14,20)],
+        # x_seq,
+        n_seq,
+        f_weights
       )
 
       # get the screening level

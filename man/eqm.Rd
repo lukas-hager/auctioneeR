@@ -4,20 +4,20 @@
 \alias{eqm}
 \title{Equilibrium Function}
 \usage{
-eqm(b, my_signal, n, c, k, interps)
+eqm(b, my_signal, n_max, c, k, interps, weights)
 }
 \arguments{
 \item{b}{The proposed bid.}
 
 \item{my_signal}{The bidder's signal}
 
-\item{n}{The number of bidders.}
-
 \item{c}{The cost of default.}
 
 \item{k}{The coefficient on the signal standard variance.}
 
 \item{interps}{The matrices used for interpolation}
+
+\item{n}{The number of bidders.}
 }
 \value{
 The error of the equilibrium function at bid \code{b}.
