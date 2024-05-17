@@ -6,6 +6,7 @@
 #' @param diff_vals The sequence of values to "look back" from a signal
 #'
 #' @return A list of interpolation matrices for each number of bidders
+#' @export
 #' @importFrom data.table :=
 #'
 create_interp_mats <- function(k,n_max,x_vals,diff_vals){
